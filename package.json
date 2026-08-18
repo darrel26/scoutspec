@@ -1,0 +1,45 @@
+{
+  "name": "scoutspec",
+  "version": "0.1.0",
+  "description": "Autonomous, spec-driven PDLC & SDLC intelligence harness for AI agents",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "scoutspec": "./bin/scoutspec.js"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "templates"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "scoutspec",
+    "spec-driven",
+    "pdlc",
+    "sdlc",
+    "ai-agents",
+    "cli"
+  ],
+  "author": "Dionisius Darrel Gunadi",
+  "license": "MIT",
+  "dependencies": {
+    "@clack/prompts": "^0.8.2",
+    "commander": "^12.1.0",
+    "picocolors": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

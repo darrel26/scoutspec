@@ -6,6 +6,37 @@ Scoutspec provides an end-to-end specification system featuring persistent multi
 
 ---
 
+## Quickstart & Installation
+
+Initialize Scoutspec in your project with one command:
+
+```bash
+# Interactive setup (scaffolds scoutspec/ & injects agent skills)
+npx scoutspec init
+
+# Non-interactive / CI mode
+npx scoutspec init -y --agents claude,opencode
+```
+
+Or install globally:
+
+```bash
+npm install -g scoutspec
+scoutspec init
+```
+
+### What `init` Does
+
+1. **Scaffolds Filesystem**:
+   - `scoutspec/context.md`: Project brain & persistent knowledge base.
+   - `scoutspec/index.yaml`: Requirement registry root.
+   - `scoutspec/specs/`: Living capability specifications.
+   - `scoutspec/requirements/`: Trace history for requirement runs.
+2. **Seeds Knowledge**: Interactively captures initial business context, constraints, competitors, and personas (or skips with template).
+3. **Injects Skills**: Copies `/scout:product-requirement` skills into your selected agent directories (`.claude/skills/`, `.opencode/skills/`).
+
+---
+
 ## Repository Structure
 
 ```
