@@ -19,7 +19,11 @@ Converts product requirements (`proposal.md`), low-level architecture (`design.m
    - Read `scoutspec/requirements/<slug>/design.md`
    - Read `scoutspec/requirements/<slug>/specs/`
 
-2. **Verify Design Completion**:
+2. **Pre-Flight Baseline Audit**:
+   - Audit target environment dependencies (`package.json`, styling packages, global entrypoints, framework configs).
+   - If runtime baseline packages or configs are missing, auto-create Phase 1 **Task 0: Pre-Flight Baseline Setup**.
+
+3. **Verify Design Completion**:
    - Ensure `design.md` has no unresolved open questions.
 
 ---
@@ -29,11 +33,12 @@ Converts product requirements (`proposal.md`), low-level architecture (`design.m
 Decompose the design into a strict 3-Phase DAG:
 
 ### 1. Phase 1: Foundation & Contract Lock (Sequential)
-- Shared interfaces, TypeScript types, DB schemas, API contracts.
+- Task 0 (if baseline missing) & Shared interfaces, TypeScript types, DB schemas, API contracts.
 - Must complete before any Phase 2 task starts.
 
 ### 2. Phase 2: Parallel Implementation (Stateless & Isolated)
 - Independent feature modules divided into strict non-overlapping file scopes.
+- Target & Route Audit: Cross-reference design spec triggers (UI links, API endpoints, CLI flags) against task list. Every entrypoint MUST map 1:1 to an implementation task.
 - Every task includes explicit metadata payload:
   - `Inputs`: Required interface/type files.
   - `Allowed Scope`: Directory pattern restricted to this task (e.g. `src/storage/**`).

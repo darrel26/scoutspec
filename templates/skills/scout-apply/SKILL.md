@@ -22,7 +22,9 @@ Executes tasks defined in `scoutspec/requirements/<slug>/tasks.md` sequentially 
 2. Restrict edits to `Allowed Scope`.
 3. Verify task artifacts and run `Verification` commands.
 
-## Phase 3: Integration & Spec Verification (Sequential)
+## Phase 3: Integration & Spec Verification Barrier (Sequential)
 1. Merge worktrees into main feature branch.
-2. Run cross-module integration tests and verify `specs/` requirements.
-3. Update `tasks.md` status to complete.
+2. **Build Gate**: Run platform build command (`npm run build` or equivalent toolchain compiler).
+3. **Reachability Audit**: Programmatically verify all target UI routes and API endpoints resolve to concrete handlers (no 404 / unhandled routes).
+4. **Behavioral Gate**: Run cross-module integration tests and verify `specs/` requirements.
+5. Update `tasks.md` status to complete.

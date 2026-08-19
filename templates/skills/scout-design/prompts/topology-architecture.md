@@ -11,5 +11,6 @@ Your goal is to evaluate high-level system boundaries, monorepo/polyrepo choices
 Write findings to `design/topology.md`:
 1. **System Topology Options**: Monolith vs Microservices vs Serverless evaluation.
 2. **Codebase & Package Boundaries**: Monorepo structure, package dependencies, component hierarchy.
-3. **Component Interactions**: ASCII sequence/data flow diagram showing client ──▶ gateway ──▶ service interactions.
-4. **Trade-off Analysis**: Pros/cons of recommended topology vs alternatives.
+3. **User-Facing Entry Point Mapping**: Map all UI views/routes and navigation triggers to concrete system modules.
+4. **Component Interactions**: ASCII sequence/data flow diagram showing client ──▶ gateway ──▶ service interactions.
+5. **Trade-off Analysis**: Pros/cons of recommended topology vs alternatives.
