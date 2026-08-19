@@ -2,4 +2,4 @@ version: 1
 requirements:
   - slug: open-summit
     title: Open Summit
-    status: ready
+    status: complete
