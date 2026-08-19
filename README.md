@@ -2,7 +2,7 @@
 
 > Autonomous, spec-driven PDLC & SDLC intelligence harness for AI agents.
 
-Scoutspec provides an end-to-end specification system featuring persistent multi-run memory, 4-agent parallel discovery, frontier-based ambiguity grilling, and living delta-spec synchronization.
+Scoutspec provides an end-to-end specification & implementation system featuring persistent multi-run memory, 4-agent parallel discovery, frontier-based ambiguity grilling, technical design generation, task DAG decomposition, worktree execution, and living delta-spec synchronization across 6 agent skills (`/scout:product-requirement`, `/scout:design`, `/scout:tasks`, `/scout:apply`, `/scout:archive`, `/scout:sync`).
 
 ---
 
@@ -33,7 +33,7 @@ scoutspec init
    - `scoutspec/specs/`: Living capability specifications.
    - `scoutspec/requirements/`: Trace history for requirement runs.
 2. **Seeds Knowledge**: Interactively captures initial business context, constraints, competitors, and personas (or skips with template).
-3. **Injects Skills**: Copies `/scout:product-requirement` skills into your selected agent directories (`.claude/skills/`, `.opencode/skills/`).
+3. **Injects Skills**: Copies all 6 scout skills (`product-requirement`, `design`, `tasks`, `apply`, `archive`, `sync`) into your selected agent directories (`.claude/skills/`, `.opencode/skills/`).
 
 ---
 
@@ -52,14 +52,12 @@ scoutspec/
 │       └── delta-spec-rules.md
 │
 ├── skills/                                # Agent skill definitions & prompt bundles
-│   └── scout-product-requirement/
-│       ├── SKILL.md                       # Orchestrator & lifecycle state engine
-│       ├── prompts/                       # Modular worker agent prompts
-│       │   ├── business-objectives.md
-│       │   ├── team-goals.md
-│       │   ├── competitor-analysis.md     # WebSearch-enabled
-│       │   └── customer-pain.md
-│       └── references/                    # Skill-specific heuristics & schemas
+│   ├── scout-product-requirement/         # /scout:product-requirement skill
+│   ├── scout-design/                      # /scout:design skill
+│   ├── scout-tasks/                       # /scout:tasks skill
+│   ├── scout-apply/                       # /scout:apply skill
+│   ├── scout-archive/                     # /scout:archive skill
+│   └── scout-sync/                        # /scout:sync skill
 │
 ├── scoutspec/                             # Runtime knowledge base & requirements store
 │   ├── context.md                         # Persistent project brain (cross-run memory)
@@ -72,6 +70,8 @@ scoutspec/
 │           ├── synthesis.md               # Merged domain facts
 │           ├── grilling.md                # Frontier Q&A audit trail
 │           ├── proposal.md                # Validated requirement proposal
+│           ├── design.md                  # HLD & LLD architecture design
+│           ├── tasks.md                   # 3-Phase task DAG breakdown
 │           └── specs/<capability>/spec.md # Delta specs (ADDED/MODIFIED/REMOVED)
 │
 └── openspec/                              # Meta-spec tracking for scoutspec development
@@ -81,25 +81,37 @@ scoutspec/
 
 ---
 
-## Core Workflow
+## Core Lifecycle Workflow
 
 ```
-/scout:product-requirement <prompt>
-  │
-  ├── 1. Read context.md (Persistent Memory)
-  │
-  ├── 2. Parallel Delta Fan-Out (4 Workers)
-  │     ├── Business Objectives
-  │     ├── Team Goals
-  │     ├── Competitor Analysis (WebSearch)
-  │     └── Customer Pain
-  │
-  ├── 3. Synthesis & Knowledge Backpropagation (Updates context.md)
-  │
-  ├── 4. Frontier Grilling Loop (Interactive Q&A logged to grilling.md)
-  │
-  └── 5. Produce proposal.md & Delta Specs (ADDED/MODIFIED/REMOVED)
+1. /scout:product-requirement <prompt>
+  └── Reads context.md -> 4-Agent Research -> Synthesis -> Frontier Grilling -> proposal.md & Delta Specs
+
+2. /scout:design <requirement-slug>
+  └── Analyzes proposal & specs -> 4 Technical Research Agents -> Grilling -> HLD & LLD design.md
+
+3. /scout:tasks <requirement-slug>
+  └── Decomposes proposal.md & design.md -> Generates 3-Phase Task DAG (tasks.md)
+
+4. /scout:apply <requirement-slug>
+  └── Executes tasks.md across 3 phases (Foundation -> Parallel Worktrees -> Integration)
+
+5. /scout:archive <requirement-slug> (or /scout:sync <requirement-slug>)
+  └── Merges delta specs to openspec/specs/ -> Backpropagates memory to context.md -> Archives folder
 ```
+
+---
+
+## Agent Skills Reference
+
+| Skill | Command | Description | Key Output Artifacts |
+|---|---|---|---|
+| **Product Requirement** | `/scout:product-requirement <prompt>` | Gathers requirements with 4 parallel research agents, grilling loop, and delta specs | `proposal.md`, `specs/` |
+| **Technical Design** | `/scout:design <slug>` | Generates high-level & low-level architecture designs | `design.md` |
+| **Task Breakdown** | `/scout:tasks <slug>` | Breaks down specs and design into a 3-Phase task graph | `tasks.md` |
+| **Task Execution** | `/scout:apply <slug>` | Executes task graph sequentially & in parallel worktrees | Code updates, task checks |
+| **Spec Archive** | `/scout:archive <slug>` | Merges delta specs into ground truth, updates context, archives run | `context.md`, `openspec/specs/` |
+| **Spec Sync** | `/scout:sync <slug>` | Companion command for spec merge & persistent memory sync | `context.md`, `openspec/specs/` |
 
 ---
 
