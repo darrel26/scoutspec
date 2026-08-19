@@ -44,7 +44,14 @@ export function injectSkills(options: InjectSkillsOptions): {
 } {
   const cwd = options.cwd || process.cwd();
   const templatesDir = getTemplatesDir();
-  const skillSrc = path.join(templatesDir, "skills", "scout-product-requirement");
+  const skillNames = [
+    "scout-product-requirement",
+    "scout-design",
+    "scout-tasks",
+    "scout-apply",
+    "scout-archive",
+    "scout-sync",
+  ];
 
   const results: Record<AgentHarness, string[]> = {
     claude: [],
@@ -52,16 +59,19 @@ export function injectSkills(options: InjectSkillsOptions): {
   };
 
   for (const agent of options.agents) {
-    let targetSkillDir = "";
-    if (agent === "claude") {
-      targetSkillDir = path.join(cwd, ".claude", "skills", "scout-product-requirement");
-    } else if (agent === "opencode") {
-      targetSkillDir = path.join(cwd, ".opencode", "skills", "scout-product-requirement");
-    }
+    for (const skillName of skillNames) {
+      const skillSrc = path.join(templatesDir, "skills", skillName);
+      let targetSkillDir = "";
+      if (agent === "claude") {
+        targetSkillDir = path.join(cwd, ".claude", "skills", skillName);
+      } else if (agent === "opencode") {
+        targetSkillDir = path.join(cwd, ".opencode", "skills", skillName);
+      }
 
-    if (targetSkillDir) {
-      const files = copyDirectoryRecursive(skillSrc, targetSkillDir, options.overwrite ?? true);
-      results[agent] = files.map((f) => path.relative(cwd, f));
+      if (targetSkillDir) {
+        const files = copyDirectoryRecursive(skillSrc, targetSkillDir, options.overwrite ?? true);
+        results[agent].push(...files.map((f) => path.relative(cwd, f)));
+      }
     }
   }
 

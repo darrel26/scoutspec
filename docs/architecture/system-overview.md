@@ -19,7 +19,7 @@
 | `researching` | 4 Parallel Subagents | `research/business-objectives.md`, `research/team-goals.md`, `research/competitor-analysis.md`, `research/customer-pain.md` |
 | `synthesizing` | Aggregator | `synthesis.md`, updates `scoutspec/context.md` |
 | `grilling` | Interactive Grilling Loop | `grilling.md` |
-| `ready` | Proposal Generator | `proposal.md`, `specs/<capability>/spec.md` |
-| `designing` | Architecture Generator | `design.md`, delta `specs/` |
+| `ready` | Proposal Generator (`/scout:product-requirement`) | `proposal.md`, initial `specs/<capability>/spec.md` |
+| `designing` | 4 Technical Subagents & Grilling (`/scout:design`) | `design.md` (HLD+LLD), `design/`, refined delta `specs/` |
 | `implementing` | Execution Engine | `tasks.md`, source code changes |
 | `archived` | Spec Sync & Archive Engine | Merges delta specs to `scoutspec/specs/`, updates `scoutspec/context.md` & `scoutspec/index.yaml` |
